@@ -38,13 +38,3 @@ env CFLAGS=-O3 ./build.sh
 The `build.sh` script will download Emscripten `1.39.20` automatically. You must be on Linux to build this. 
 
 The generated files will be in the `out/` directory. Then you can run `(cd out; python3 -m http.server)` to serve the files on a web server.
-
-## Credits
-
-This port is made by [@ading2210](https://github.com/ading2210/).
-
-Forked from [doomgeneric](https://github.com/ozkl/doomgeneric).
-
-Inspired by [horrifying-pdf-experiments](https://github.com/osnr/horrifying-pdf-experiments) and [pdftris](https://github.com/ThomasRinsma/pdftris).
-
-training done by me
