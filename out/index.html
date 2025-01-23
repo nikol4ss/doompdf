@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>DoomPDF</title>
+    <link rel="stylesheet" href="/index.css">
+    <script src="/index.js" defer></script>
+  </head>
+  <body>
+    <div id="article">
+      <div id="header_box">
+        <img src="/favicon.png" width="48px" height="48px">
+        <h1>DoomPDF</h1>
+      </div>
+
+      <p>This is a Doom source port that runs inside a PDF file.</p>
+      <p>Source code: <a href="https://github.com/ading2210/doompdf">https://github.com/ading2210/doompdf</a></p>
+
+      <hr><br>
+
+      <div id="controls_box">
+        <a href="/doom.pdf" id="play_button">Start Game</a>
+        <p id="shareware_note" style="margin: 0px; margin-left: 8px;">(shareware)</p>
+        <div class="spacer"></div>
+        <input type="checkbox" id="custom_wad_checkbox">
+        <label for="custom_wad_checkbox">Custom WAD</label>
+      </div>
+      <div id="wad_container">
+        <div>
+          <label for="iwad_file_picker">IWAD file:</label><br>
+          <input type="file" id="iwad_file_picker" name="iwad_file_picker" accept=".wad">
+        </div>
+        <div class="spacer"></div>
+        <div>
+          <label for="iwad_file_picker">PWAD file:</label><br>
+          <input type="file" id="wad_file_picker" name="wad_file_picker" accept=".wad">
+        </div>
+      </div>
+      <br>
+      <p style="font-size: 12px; margin-top: 4px; margin-bottom: 4px;">Note: the PDF only works inside Chromium-based browsers.</p>
+    </div>
+  </body>
+</html>
