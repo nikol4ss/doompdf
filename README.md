@@ -46,4 +46,5 @@ This port is made by [@ading2210](https://github.com/ading2210/).
 Forked from [doomgeneric](https://github.com/ozkl/doomgeneric).
 
 Inspired by [horrifying-pdf-experiments](https://github.com/osnr/horrifying-pdf-experiments) and [pdftris](https://github.com/ThomasRinsma/pdftris).
-# doompdf
+
+training done by me
