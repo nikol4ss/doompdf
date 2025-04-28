@@ -1,40 +1,38 @@
 # DoomPDF
 
-This is a Doom source port that runs inside a PDF file. 
+This is a Doom source port that runs inside a PDF file. You can play Doom directly inside a PDF, leveraging Javascript in a PDF for interactive gaming.
 
 Play it here: [doom.pdf](https://doompdf.pages.dev/doom.pdf)
 
-https://github.com/user-attachments/assets/0b39de6d-a53a-4494-8eba-3d16e7431e3a
+## Tech Stack
 
-> [!IMPORTANT]
-> Any crypto things claiming to be related to me or this project are fake. See https://bsky.app/profile/ading.dev/post/3lfyhqifjls2p
+**Client:** PDF (Chromium, Firefox)
 
-## Javascript in a PDF
+**Server:** JavaScript, Emscripten, PDF.js
 
-You might expect PDF files to only be comprised of static documents, but surprisingly, the PDF file format supports Javascript with its own separate standard library. Modern browsers (Chromium, Firefox) implement this as part of their PDF engines. However, the APIs that are available in the browser are much more limited. 
+## PDF Javascript Integration
 
-The full specfication for the JS in PDFs was only ever implemented by Adobe Acrobat, and it contains some ridiculous things like the ability to do [3D rendering](https://opensource.adobe.com/dc-acrobat-sdk-docs/library/jsapiref/JS_API_AcroJS.html#annot3d), make [HTTP requests](https://opensource.adobe.com/dc-acrobat-sdk-docs/library/jsapiref/JS_API_AcroJS.html#net-http), and [detect every monitor connected to the user's system](https://opensource.adobe.com/dc-acrobat-sdk-docs/library/jsapiref/JS_API_AcroJS.html#monitor). However, on Chromium and other browsers, only a tiny amount of this API surface was implemented, due to obvious security concerns. With this, we can do whatever computation we want, just with some very limited IO.
+Surprisingly, PDF files support Javascript, which can be used for interactive features like gaming. In this project, we leverage this capability to run Doom inside a PDF file. 
 
-## Porting Doom
+### Key Concepts
 
-C code can be compiled to run within a PDF using and old version of Emscripten that targets [asm.js](https://en.wikipedia.org/wiki/Asm.js) instead of WebAssembly. Then, all that's needed is a way to get key inputs, and a framebuffer for the output. Inputs are fairly straightforward, since Chromium's PDF engine supports text fields and buttons. Getting a good looking and fast enough framebuffer is a lot more of a challenge though.
+- **PDF Javascript**: The PDF file format supports Javascript with its own standard library. This allows for interactive elements such as games.
+- **Porting Doom**: We compile C code to run inside a PDF using Emscripten targeting asm.js instead of WebAssembly.
+- **Text Field Manipulation**: We simulate a framebuffer by manipulating text fields to display Doom’s graphical output in a limited way (monochrome with ASCII characters).
 
-Previous interactive PDF projects I've seen use individual text fields that are toggled on/off to make individual pixels. However, Doom's resolution is 320x200 which would mean thousands of text fields would have to be toggled every frame, which is infeasible. Instead, this port uses a separate text field for each row in the screen, then it sets their contents to various ASCII characters. I managed to get a 6 color monochrome output this way, which is enough for things to be legible in-game. The performance of this method is pretty poor but playable, since updating all of that text takes around 80ms per frame. 
+### Features
 
-I also implemented a scrolling text console using 25 stacked text fields. The stdout stream from Emscripten is redirected to there. This let me debug a lot easier because otherwise there is no console logging method available (the proper `console.println` is unimplemented in Chrome).
-
-There's also a feature to insert custom WAD files into the PDF. You can go to https://doompdf.pages.dev/, select your WADs, and download a newly generated PDF file with those WADs preloaded. 
+1. **Doom Gameplay**: Play Doom directly within the PDF using keyboard input and an ASCII-based framebuffer output.
+2. **Console Logging**: The PDF features a console for debugging, which captures stdout using stacked text fields for easier troubleshooting.
+3. **Custom WAD Files**: Insert custom WAD files into the PDF for personalized gameplay. Upload your WAD files at [doompdf.pages.dev](https://doompdf.pages.dev/) to generate a new Doom PDF.
 
 ## Build Instructions
 
-Clone this repository and run the following commands:
-```
+Clone this repository and follow these steps to build the project:
+```bash
 python3 -m venv .venv
 source .venv/bin/activate
 pip3 install -r requirements.txt
 env CFLAGS=-O3 ./build.sh
-```
 
-The `build.sh` script will download Emscripten `1.39.20` automatically. You must be on Linux to build this. 
 
-The generated files will be in the `out/` directory. Then you can run `(cd out; python3 -m http.server)` to serve the files on a web server.
