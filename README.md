@@ -25,14 +25,3 @@ Surprisingly, PDF files support Javascript, which can be used for interactive fe
 1. **Doom Gameplay**: Play Doom directly within the PDF using keyboard input and an ASCII-based framebuffer output.
 2. **Console Logging**: The PDF features a console for debugging, which captures stdout using stacked text fields for easier troubleshooting.
 3. **Custom WAD Files**: Insert custom WAD files into the PDF for personalized gameplay. Upload your WAD files at [doompdf.pages.dev](https://doompdf.pages.dev/) to generate a new Doom PDF.
-
-## Build Instructions
-
-Clone this repository and follow these steps to build the project:
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip3 install -r requirements.txt
-env CFLAGS=-O3 ./build.sh
-
-
